@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Niche Book Recommender</title>
+  <!-- remove this line if you don't have a static/style.css -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <h1>Welcome to the Niche Book Recommender</h1>
+  <form method="post" action="{{ url_for('recommend') }}">
+
+    <!-- 1) Genres -->
+    <fieldset>
+      <legend>Select one or more genres:</legend>
+      {% for genre in genres %}
+        <label>
+          <input type="checkbox" name="genres" value="{{ genre }}">
+          {{ genre }}
+        </label><br>
+      {% endfor %}
+    </fieldset>
+
+    <!-- 2) Size bucket -->
+    <fieldset>
+      <legend>Select a size bucket:</legend>
+      <select name="bucket">
+        {% for b in buckets %}
+          <option value="{{ b.key }}">
+            {{ b.key }} ({{ b.lo }} to {{ b.hi_display }} pages)
+          </option>
+        {% endfor %}
+      </select>
+    </fieldset>
+
+    <!-- 3) Reference-book rounds -->
+    {% for round in [1,2,3] %}
+      <fieldset>
+        <legend>Round {{ round }}: Which book have you read?</legend>
+        {% for book in pairs[round-1] %}
+          <label>
+            <input type="radio"
+                   name="ref{{ round }}"
+                   value='{{ book | tojson }}'>
+            {{ book.title }} by {{ book.authors }}
+            ({{ book.num_pages }} pages)
+          </label><br>
+        {% endfor %}
+        <label>
+          <input type="radio" name="ref{{ round }}" value="none" checked>
+          I haven’t read either
+        </label>
+      </fieldset>
+    {% endfor %}
+
+    <button type="submit">Get Recommendations</button>
+  </form>
+</body>
+</html>

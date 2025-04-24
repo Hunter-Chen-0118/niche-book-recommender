@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Step 1: Preferences</title>
+</head>
+<body>
+  <h1>Welcome to the Niche Book Recommender</h1>
+  <form method="post" action="{{ url_for('preferences') }}">
+    <fieldset>
+      <legend>Select genres:</legend>
+      {% for g in genres %}
+        <label>
+          <input type="checkbox" name="genres" value="{{ g }}">
+          {{ g }}
+        </label><br>
+      {% endfor %}
+    </fieldset>
+
+    <fieldset>
+      <legend>Select size bucket:</legend>
+      <select name="bucket">
+        {% for b in buckets %}
+          <option value="{{ b.key }}">
+            {{ b.key }} ({{ b.lo }} to {{ b.hi_display }} pages)
+          </option>
+        {% endfor %}
+      </select>
+    </fieldset>
+
+    <button type="submit">Next: Reference Books</button>
+  </form>
+</body>
+</html>

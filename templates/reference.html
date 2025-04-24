@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Step {{ round_num }} of 3</title>
+</head>
+<body>
+  <h1>Reference Round {{ round_num }}</h1>
+  <p>Which of these have you read?</p>
+  <form method="post" action="{{ url_for('reference_round', round_num=round_num) }}">
+    {% for book in pair %}
+      <label>
+        <input
+          type="radio"
+          name="choice"
+          value='{{ book | tojson }}'>
+        {{ book.title }} by {{ book.authors }}
+        ({{ book.num_pages }} pages)
+      </label><br>
+    {% endfor %}
+    <label>
+      <input type="radio" name="choice" value="none" checked>
+      I haven't read either
+    </label><br><br>
+    <button type="submit">
+      {% if round_num < 3 %}Next{% else %}See Recommendations{% endif %}
+    </button>
+  </form>
+</body>
+</html>

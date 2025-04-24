@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Recommendations</title>
+</head>
+<body>
+  <h1>Here’s what we found for you</h1>
+
+  <section>
+    <h2>Chosen Preferences</h2>
+    <p><strong>Genres:</strong> {{ prefs.genres | join(', ') }}</p>
+    <p><strong>Size bucket:</strong> {{ prefs.size_bucket }}</p>
+    {% if prefs.references %}
+      <p><strong>Reference books:</strong></p>
+      <ul>
+        {% for ref in prefs.references %}
+          <li>{{ ref.title }} by {{ ref.authors }}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p><em>No reference books selected.</em></p>
+    {% endif %}
+  </section>
+
+  <section>
+    <h2>Weights Used</h2>
+    <ul>
+      <li>Genre: {{ weights.genre }}</li>
+      <li>Length: {{ weights.length }}</li>
+      <li>Reference: {{ weights.reference }}</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Top 10 Recommendations</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th><th>Authors</th><th>Avg Rating</th>
+          <th>Pages</th><th>Genres</th><th>Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for book in recommendations %}
+          <tr>
+            <td>{{ book.title }}</td>
+            <td>{{ book.authors }}</td>
+            <td>{{ book.average_rating }}</td>
+            <td>{{ book.num_pages }}</td>
+            <td>{{ book.genre_list | join(', ') }}</td>
+            <td>{{ '%.3f'|format(book.score) }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <a href="{{ url_for('preferences') }}">Start Over</a>
+  </section>
+</body>
+</html>
