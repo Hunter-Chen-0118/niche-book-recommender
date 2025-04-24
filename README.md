@@ -3,6 +3,8 @@
 I built a Python‑based recommendation engine whose goal is to surface high‑quality, low‑visibility books that typically fall outside mainstream algorithms. By filtering for titles with an average rating above 4.0 but fewer than 200 reviews, the system focuses on a curated “niche” subset that often goes overlooked on Goodreads.
 This report walks through each component of the program, explaining the logic and why the recommendations align with user preferences.
 
+**recommendation.ipynb is where the program is located, reference that only
+
 1. Data Loading
 Files:
 
